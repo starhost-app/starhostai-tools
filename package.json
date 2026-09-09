@@ -1,0 +1,44 @@
+{
+  "name": "starhostai-tools",
+  "version": "0.2.0",
+  "description": "StarHostAI Tools — pair any machine to StarHostAI with an 8-character connection code (2-week auth token), so the AI can read/write files and run terminal commands.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "bin/index.js",
+  "bin": {
+    "starhostai-tools": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "scripts": {
+    "start": "node bin/index.js"
+  },
+  "keywords": [
+    "starhostai",
+    "cli",
+    "mcp",
+    "filesystem",
+    "terminal",
+    "agent"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/starhost-app/starhostai-tools.git"
+  },
+  "homepage": "https://github.com/starhost-app/starhostai-tools#readme",
+  "bugs": {
+    "url": "https://github.com/starhost-app/starhostai-tools/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
