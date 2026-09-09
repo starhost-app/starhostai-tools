@@ -18,7 +18,7 @@ function serverUrl(explicit) {
 
 function usage() {
   console.log(`
-  StarHostAI Tools v${VERSION}
+  StarHostAI Tools
 
   Connect this machine to StarHostAI so the AI can:
     • read / write / create / list / delete files across your system
@@ -82,16 +82,12 @@ async function promptForDeviceName() {
 
 async function status() {
   const config = loadConfig();
-  console.log(`\n  StarHostAI Tools v${VERSION}`);
+  console.log(`\n  StarHostAI Tools`);
   if (!config.token) {
     console.log("  Not paired yet. Run `npx github:starhost-app/starhostai-tools` — it asks for your 8-character connection code.\n");
     return;
   }
-  console.log(`  Server:        ${config.server || serverUrl()}`);
-  console.log(`  Device:        ${config.name || "CLI Session"}`);
-  console.log(`  Auth Token:    ${config.token.slice(0, 18)}... (expiry checked with the server on connect)`);
-  console.log(`  Mode:          ${config.mode || "allow"}`);
-  console.log(`  System Access: Full system access (protected system directories excluded)\n`);
+  console.log(`  Device:        ${config.name || "CLI Session"}\n`);
 }
 
 async function main() {
@@ -129,7 +125,7 @@ async function main() {
     let name = args.name || config.name || null;
 
     if (!code && !token) {
-      console.log(`\n  StarHostAI Tools v${VERSION}`);
+      console.log(`\n  StarHostAI Tools`);
       console.log("  No saved connection found. Pair this machine (find your code in StarHostAI → Connect).\n");
       code = await promptForCode();
       if (!code) {
@@ -139,17 +135,13 @@ async function main() {
       if (!name) name = await promptForDeviceName();
     }
 
-    console.log(`\n  StarHostAI Tools v${VERSION}`);
-    console.log(`  Server:        ${base}`);
+    console.log(`\n  StarHostAI Tools`);
     if (token) {
       console.log(`  Device:        ${name || "CLI Session"}`);
-      console.log(`  Auth Token:    ${token.slice(0, 18)}... (validating with server…)`);
     } else {
       console.log(`  Device:        ${name || "CLI Session"}`);
       console.log(`  Pairing Code:  ${code} (exchanging for a 2-week auth token…)`);
     }
-    console.log(`  Mode:          ${mode}`);
-    console.log(`  System Access: Full system access (protected system directories excluded)`);
 
     const onAuthToken = ({ token: newToken, expiresAt }) => {
       saveConfig({ ...loadConfig(), server: base, token: newToken, expiresAt, name, mode, code: undefined });
