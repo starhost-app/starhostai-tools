@@ -12,8 +12,13 @@ const COMMANDS = ["help", "status", "version", "disconnect"];
 
 function serverUrl(explicit) {
   const fromEnv = process.env.STARHOSTAI_URL;
-  const fromConfig = loadConfig().server;
-  return (explicit || fromEnv || fromConfig || DEFAULT_SERVER_URL || "http://localhost:3000").replace(/\/+$/, "");
+  const saved = loadConfig().server;
+  // "http://localhost:3000" is the legacy default the old CLI persisted into
+  // config during local dev before a production URL existed — treat it as
+  // unset so the real default wins. Explicit --server / STARHOSTAI_URL still
+  // override everything, and a custom dev server saved in config still works.
+  const fromConfig = saved && saved !== "http://localhost:3000" ? saved : null;
+  return (explicit || fromEnv || DEFAULT_SERVER_URL || fromConfig || "http://localhost:3000").replace(/\/+$/, "");
 }
 
 function usage() {
